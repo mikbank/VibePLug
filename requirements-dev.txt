@@ -1,0 +1,4 @@
+# Packaging/validation tools only. The shipped inventory helper is standard-library-only.
+jsonschema==4.26.0
+Pillow==13.0.0
+PyYAML==6.0.3

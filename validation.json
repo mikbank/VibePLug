@@ -1,0 +1,51 @@
+{
+  "result": "passed",
+  "checks": 89,
+  "archive_sha256": "9a307e74e3503bbd334e4ea6d9b553e9d2905ba06656a74abb1b61bd2191217f",
+  "schema_sha256": "cce967bb1c77641634ce30353f2a699c44cf245e695d2c7a34bb8be771877c3d",
+  "app_id": "261c64ae-e58d-4efa-aa5c-68907c8b3f46",
+  "version": "1.0.0",
+  "files": 20,
+  "skills": [
+    {
+      "skill": "migrate-to-copilot-code",
+      "words": 1095,
+      "companions": 4
+    },
+    {
+      "skill": "copilot-managed-app-capabilities",
+      "words": 744,
+      "companions": 2
+    },
+    {
+      "skill": "rebuild-lovable-app",
+      "words": 808,
+      "companions": 1
+    },
+    {
+      "skill": "rebuild-html-app",
+      "words": 742,
+      "companions": 1
+    },
+    {
+      "skill": "sharepoint-persistence",
+      "words": 905,
+      "companions": 2
+    },
+    {
+      "skill": "verify-and-publish",
+      "words": 753,
+      "companions": 1
+    }
+  ],
+  "not_tested": [
+    "Microsoft tenant upload/ingestion",
+    "Skill activation in Cowork/Code",
+    "End-to-end source migration",
+    "Live SharePoint operations",
+    "App deployment/player launch"
+  ],
+  "notes": [
+    "Local checks cover the saved Microsoft schema and documented package constraints; tenant-specific validation is separate."
+  ]
+}

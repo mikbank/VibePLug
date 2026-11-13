@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.28",
+  "version": "1.0.0",
+  "id": "261c64ae-e58d-4efa-aa5c-68907c8b3f46",
+  "developer": {
+    "name": "NIRAS A/S",
+    "websiteUrl": "https://www.niras.com/",
+    "privacyUrl": "https://www.niras.com/privacy-policy/",
+    "termsOfUseUrl": "https://niras.sharepoint.com/sites/GlobalIT/SitePages/Citizen-Development-And-VibeCoding-in-NIRAS.aspx"
+  },
+  "name": {
+    "short": "NIRAS App Migration",
+    "full": "NIRAS App Migration for Copilot Code"
+  },
+  "description": {
+    "short": "Recreate Lovable, HTML and other apps in Copilot Code with SharePoint storage.",
+    "full": "Recreate vibe-coded solutions as new Copilot Code apps. Explore available source and workflows, recover business rules, ask focused questions when intent is unclear, build a fresh native managed app, guide SharePoint persistence, verify behavior and publish when migration is requested. Includes Lovable and static HTML playbooks, platform capability guidance, evidence templates and a read-only source inventory utility. Uses the host coding and approved data tools; this skills-only package does not itself provide source access, data connections or deployment credentials. Publisher: NIRAS A/S."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#087F78",
+  "agentSkills": [
+    {
+      "folder": "./skills/migrate-to-copilot-code"
+    },
+    {
+      "folder": "./skills/copilot-managed-app-capabilities"
+    },
+    {
+      "folder": "./skills/rebuild-lovable-app"
+    },
+    {
+      "folder": "./skills/rebuild-html-app"
+    },
+    {
+      "folder": "./skills/sharepoint-persistence"
+    },
+    {
+      "folder": "./skills/verify-and-publish"
+    }
+  ]
+}
