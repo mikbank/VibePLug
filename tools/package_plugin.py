@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Create a deterministic Microsoft 365 admin ZIP; never provisions a tenant."""
 import argparse
+import json
 from pathlib import Path
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
+
+def default_output():
+    version=json.loads((ROOT/'plugin'/'manifest.json').read_text(encoding='utf-8'))['version']
+    return ROOT/'dist'/f'niras-app-migration-{version}.zip'
 
 def package(source, destination):
     files=sorted(p for p in source.rglob('*') if p.is_file())
@@ -25,7 +30,7 @@ def package(source, destination):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ROOT/'dist'/'niras-app-migration-1.0.0.zip')
+    parser.add_argument('--output',type=Path,default=default_output())
     args=parser.parse_args()
     count=package(ROOT/'plugin',args.output)
     print(f'Packaged {count} files: {args.output}')

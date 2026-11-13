@@ -1,8 +1,8 @@
 # NIRAS App Migration for Copilot Code
 
-Version 1.0.0 · Prepared 13 November 2026 · Publisher: NIRAS A/S
+Version 1.0.1 · Prepared 13 November 2026 · Publisher: NIRAS A/S
 
-[Download the plugin ZIP](dist/niras-app-migration-1.0.0.zip?raw=true) · [Setup guide](NIRAS-App-Migration-Guide.md) · [Research](RESEARCH.md)
+[Download the plugin ZIP](dist/niras-app-migration-1.0.1.zip?raw=true) · [Setup guide](NIRAS-App-Migration-Guide.md) · [Research](RESEARCH.md)
 
 This Microsoft 365 plugin teaches Copilot to inspect an existing solution and recreate it as a fresh Copilot Code managed app. It covers Lovable, static HTML applications and discovery of projects from other platforms. SharePoint is the default durable store. A request to migrate includes building, testing and publishing, unless the user limits the scope.
 
@@ -10,9 +10,9 @@ The result is a skills package, not a deterministic source converter or an indep
 
 ## Upload package
 
-Upload **`dist/niras-app-migration-1.0.0.zip`**. The ZIP contains `manifest.json`, two PNG icons and six declared skills at its root. Do not upload this source directory or the source distribution ZIP as the plugin.
+Upload **`dist/niras-app-migration-1.0.1.zip`**. The ZIP contains `manifest.json`, two PNG icons and six declared skills at its root. Do not upload this source directory or the source distribution ZIP as the plugin.
 
-The package follows Microsoft's manually assembled unified manifest **1.28** format. It includes no remote MCP server, external service dependency or embedded credentials. The app ID is `261c64ae-e58d-4efa-aa5c-68907c8b3f46`; keep it stable when updating and increment the manifest version.
+Version 1.0.1 targets Microsoft's current unified manifest **1.29** format and has been compared with the official Agents Toolkit packager. It includes no remote MCP server, external service dependency or embedded credentials. The app ID is `261c64ae-e58d-4efa-aa5c-68907c8b3f46`; keep it stable when updating and increment the manifest version.
 
 Configured publisher fields:
 
@@ -78,21 +78,25 @@ It accepts a directory, code ZIP or HTML file. It does not execute code, install
 
 ## Rebuild and validate the plugin
 
-Development utilities use Python 3.10+ with the dependencies in `requirements-dev.txt`. The shipped source-inventory helper has no third-party dependency.
+Python development utilities use Python 3.10+ with the dependencies in `requirements-dev.txt`. Microsoft offline checks also use the pinned Node dependencies in `package.json` and `package-lock.json`. The shipped source-inventory helper has no third-party dependency.
 
 ```bash
 python -m pip install -r requirements-dev.txt
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
 python tools/make_icons.py
 python tools/package_plugin.py
-PYTHONDONTWRITEBYTECODE=1 python tools/validate_plugin.py dist/niras-app-migration-1.0.0.zip --report validation.json
+PYTHONDONTWRITEBYTECODE=1 python tools/validate_plugin.py dist/niras-app-migration-1.0.1.zip --report validation.json
 ```
 
-Microsoft's unchanged schema snapshot is included in `schemas/` for reproducible local manifest validation. Python's metaschema regex check does not understand some ECMAScript patterns in unrelated optional vendor definitions, so the validator validates this manifest against the saved schema without revalidating the schema's own regex syntax. It also checks ZIP integrity, metadata, icon sizes/transparency, declared skills, frontmatter, companion references and package path/size constraints. These are local checks, not Microsoft's service-side validation.
+Microsoft's unchanged 1.28 and 1.29 schema snapshots are included in `schemas/` for reproducible local manifest validation. Python's metaschema regex check does not understand some ECMAScript patterns in unrelated optional vendor definitions, so the validator validates this manifest against the saved schema without revalidating the schema's own regex syntax. It also checks ZIP integrity, metadata, icon sizes/transparency, declared skills, frontmatter, companion references and package path/size constraints. These are local checks, not Microsoft's service-side validation.
+
+For the Microsoft tooling checks, install the pinned dependencies with `npm ci --ignore-scripts` and run `npm run check:microsoft -- --report microsoft-validation.json`. This invokes Microsoft's offline library and packaging driver; it does not sign in, upload or provision.
 
 ## Verification status and tenant pilot
 
-Local verification: **14 inventory-helper tests passed**, and the upload ZIP passed the saved Microsoft manifest schema plus documented package checks. `validation.json` contains the package hash and exact scope of verification. The build is reproducible from the included sources.
+Local verification: **21 tests passed** (14 inventory-helper and 7 package checks). The ZIP passed the saved Microsoft schema and 90 local checks. Microsoft's own libraries parsed all six skills, passed transport preflight and found no schema errors. The contents match the official packager output; see `microsoft-validation.json`. The build is reproducible.
+
+The original 1.0.0 package was rejected by the user's admin upload. This 1.0.1 candidate has not yet been accepted by that service; offline checks do not establish tenant acceptance. See [ADMIN-UPLOAD-TROUBLESHOOTING.md](ADMIN-UPLOAD-TROUBLESHOOTING.md).
 
 Not yet exercised: tenant upload, actual skill activation, a migration performed by the host model, live SharePoint operations, app deployment or player launch. `evaluations/scenarios.json` contains 18 behavioral scenarios; they are **not run**, not passed tests.
 
@@ -100,4 +104,4 @@ Start with one noncritical source app and a dedicated SharePoint destination. Co
 
 Publishing the target is included when migration is requested. Sharing more broadly, deleting the source, replacing its traffic, disabling its services or removing unrelated historical lists requires that additional scope to be requested. Existing platform consent prompts and tenant controls still apply.
 
-Read [RESEARCH.md](RESEARCH.md) for sources, design choices and unresolved environment checks, and [EVALUATION-GUIDE.md](EVALUATION-GUIDE.md) for pilot execution. The editable source distribution is [dist/niras-app-migration-source-1.0.0.zip](dist/niras-app-migration-source-1.0.0.zip?raw=true).
+Read [RESEARCH.md](RESEARCH.md) for sources, design choices and unresolved environment checks, and [EVALUATION-GUIDE.md](EVALUATION-GUIDE.md) for pilot execution. The editable source distribution is [dist/niras-app-migration-source-1.0.1.zip](dist/niras-app-migration-source-1.0.1.zip?raw=true).

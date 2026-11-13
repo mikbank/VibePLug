@@ -1,10 +1,11 @@
 {
   "result": "passed",
-  "checks": 89,
-  "archive_sha256": "9a307e74e3503bbd334e4ea6d9b553e9d2905ba06656a74abb1b61bd2191217f",
-  "schema_sha256": "cce967bb1c77641634ce30353f2a699c44cf245e695d2c7a34bb8be771877c3d",
+  "checks": 90,
+  "archive_sha256": "52169996009ee4411a7c56cd59df476ae12b63748cb09918246ec002c9a7f113",
+  "schema_sha256": "53e860fd650fd03fe587379d92af6c91374e791f041ce3f26c92d5e74aeafa0b",
   "app_id": "261c64ae-e58d-4efa-aa5c-68907c8b3f46",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "manifest_version": "1.29",
   "files": 20,
   "skills": [
     {
