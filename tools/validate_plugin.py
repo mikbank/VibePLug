@@ -36,6 +36,8 @@ def validate(archive_path,schema_path):
                 'Safe package path: '+name)
         require('manifest.json' in names,'Manifest at ZIP root')
         manifest=json.loads(archive.read('manifest.json'))
+        expected_schema=f"https://developer.microsoft.com/json-schemas/teams/v{manifest['manifestVersion']}/MicrosoftTeams.schema.json"
+        require(manifest.get('$schema')==expected_schema,'Microsoft manifest schema/version agreement')
         schema=json.loads(schema_path.read_text())
         validator=validators.validator_for(schema)
         # This vendor schema uses ECMAScript Unicode property escapes in unused
@@ -43,7 +45,7 @@ def validate(archive_path,schema_path):
         # cannot parse that dialect. Validate this manifest against the unchanged
         # official schema, without meta-validating the vendor's regex syntax.
         errors=sorted(validator(schema,format_checker=FormatChecker()).iter_errors(manifest),key=lambda e:str(e.path))
-        require(not errors,'Official Microsoft v1.28 manifest schema: '+'; '.join(e.message for e in errors))
+        require(not errors,'Official Microsoft manifest schema: '+'; '.join(e.message for e in errors))
         require(str(uuid.UUID(manifest['id']))==manifest['id'],'Stable valid app UUID')
         require(not any(p in json.dumps(manifest).lower() for p in ('example.com','your-guid','contoso','placeholder')),'No placeholder manifest metadata')
         for key,size in [('color',(192,192)),('outline',(32,32))]:
@@ -88,17 +90,24 @@ def validate(archive_path,schema_path):
             'Only manifest, icons and declared skills in upload ZIP')
     return {'result':'passed','checks':len(checks),'archive_sha256':hashlib.sha256(archive_path.read_bytes()).hexdigest(),
         'schema_sha256':hashlib.sha256(schema_path.read_bytes()).hexdigest(),'app_id':manifest['id'],
-        'version':manifest['version'],'files':len(names),'skills':file_summary,
+        'version':manifest['version'],'manifest_version':manifest['manifestVersion'],
+        'files':len(names),'skills':file_summary,
         'not_tested':['Microsoft tenant upload/ingestion','Skill activation in Cowork/Code','End-to-end source migration','Live SharePoint operations','App deployment/player launch'],
         'notes':['Local checks cover the saved Microsoft schema and documented package constraints; tenant-specific validation is separate.']}
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('archive',type=Path)
-    parser.add_argument('--schema',type=Path,default=ROOT/'schemas'/'MicrosoftTeams-v1.28.schema.json')
+    parser.add_argument('--schema',type=Path)
     parser.add_argument('--report',type=Path)
     args=parser.parse_args()
     try:
+        if args.schema is None:
+            with zipfile.ZipFile(args.archive) as archive:
+                manifest_version=json.loads(archive.read('manifest.json'))['manifestVersion']
+            if not re.fullmatch(r'1\.[0-9]+',manifest_version):
+                raise ValueError('Unsupported manifest schema version')
+            args.schema=ROOT/'schemas'/f'MicrosoftTeams-v{manifest_version}.schema.json'
         result=validate(args.archive,args.schema)
         encoded=json.dumps(result,indent=2)+'\n'
         if args.report:args.report.write_text(encoded)

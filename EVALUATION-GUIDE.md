@@ -1,6 +1,6 @@
 # Tenant evaluation guide
 
-The JSON scenarios are specifications for exercising the plugin in the real host. They have not been run. They are distinct from the 14 executed Python tests, which verify the optional inventory utility only.
+The JSON scenarios are specifications for exercising the plugin in the real host. They have not been run. They are distinct from the 21 executed Python tests: 14 verify the inventory utility and 7 verify packaging. Microsoft offline package checks are recorded separately; tenant acceptance is pending.
 
 ## Activation check
 

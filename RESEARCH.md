@@ -10,7 +10,7 @@ Managed Runtime supports multiple creation routes and supplies Microsoft-hosted 
 
 Microsoft documents a JavaScript/TypeScript SPA architecture with generated connector services and platform-owned configuration. Existing server-rendered apps therefore need a behavior mapping rather than an assumption that their server code can be carried across unchanged. [Runtime architecture](https://learn.microsoft.com/en-us/microsoft-365/managed-apps/developer/architecture)
 
-Cowork plugins can contain Agent Skills in a unified Microsoft 365 app ZIP. This package uses the documented manually assembled manifest 1.28 format, root icons and declared skill folders. The local packaging pipeline avoids tenant provisioning and embeds no external server. The upload validator remains Microsoft's authority on service acceptance. [Plugin development](https://learn.microsoft.com/en-us/copilot/cowork/cowork-plugin-development), [manifest schema](https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json)
+Cowork plugins can contain Agent Skills in a unified Microsoft 365 app ZIP. The initial release used the documented manually assembled manifest 1.28 format. Version 1.0.1 targets the current 1.29 schema, preserving root icons and the six skill folders. Its contents were compared with the official Agents Toolkit packager. The local packaging pipeline avoids tenant provisioning and embeds no external server. The upload validator remains Microsoft's authority on service acceptance. [Plugin development](https://learn.microsoft.com/en-us/copilot/cowork/cowork-plugin-development), [manifest schema](https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json)
 
 ## Important current-platform details
 
@@ -60,3 +60,9 @@ The attachment favored retaining an original calculation engine in that historic
 ## Open environment checks
 
 The exact NIRAS tenant's plugin ingestion, skill availability in Code/Cowork, builder/connector permissions, backend operations, browser behavior and deployment route remain untested. No private NIRAS systems were accessed for this preparation. The supplied internal terms URL is used as metadata without claiming its contents were reviewed. Public NIRAS privacy information was verified at [NIRAS privacy policy](https://www.niras.com/privacy-policy/).
+
+## Admin-upload investigation
+
+The user reported an invalid-manifest rejection. Direct inspection of the downloaded 1.0.0 ZIP found valid JSON and all declared skills. Microsoft Teams Manifest 0.1.9 and TeamsFx Core 3.1.5 also accepted its offline schema and skill inventory; the reference packager produced the same file set and nonmanifest bytes. Missing directory records were investigated and ruled out: Microsoft's packager omits them too. This does not identify the service-side rule.
+
+Version 1.0.1 adopts the current manifest 1.29, adds reproducible Microsoft offline checks and records tenant acceptance as pending. [Current package validation](https://microsoft.github.io/wiqd/cli/plugin-validate/) validates the exact ZIP through Teams Developer Portal and may require Microsoft sign-in; offline source checks cannot substitute for that.

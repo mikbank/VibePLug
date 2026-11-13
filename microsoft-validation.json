@@ -1,0 +1,54 @@
+{
+  "result": "passed",
+  "tools": {
+    "@microsoft/teams-manifest": "0.1.9",
+    "@microsoft/teamsfx-core": "3.1.5"
+  },
+  "archive_sha256": "52169996009ee4411a7c56cd59df476ae12b63748cb09918246ec002c9a7f113",
+  "version": "1.0.1",
+  "manifest_version": "1.29",
+  "app_id": "261c64ae-e58d-4efa-aa5c-68907c8b3f46",
+  "strict_json": "passed",
+  "microsoft_schema_errors": [],
+  "microsoft_skill_inventory": [
+    {
+      "name": "migrate-to-copilot-code",
+      "folder": "skills/migrate-to-copilot-code",
+      "files": 5
+    },
+    {
+      "name": "copilot-managed-app-capabilities",
+      "folder": "skills/copilot-managed-app-capabilities",
+      "files": 3
+    },
+    {
+      "name": "rebuild-lovable-app",
+      "folder": "skills/rebuild-lovable-app",
+      "files": 2
+    },
+    {
+      "name": "rebuild-html-app",
+      "folder": "skills/rebuild-html-app",
+      "files": 2
+    },
+    {
+      "name": "sharepoint-persistence",
+      "folder": "skills/sharepoint-persistence",
+      "files": 3
+    },
+    {
+      "name": "verify-and-publish",
+      "folder": "skills/verify-and-publish",
+      "files": 2
+    }
+  ],
+  "microsoft_skill_transport_preflight": "passed",
+  "microsoft_packager_comparison": {
+    "result": "passed",
+    "files": 20,
+    "manifest": "semantic equality",
+    "other_files": "byte equality"
+  },
+  "service_side_validation": "not_run; requires Microsoft sign-in",
+  "tenant_installation": "not_retested"
+}

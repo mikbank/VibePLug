@@ -1,0 +1,13 @@
+{
+  "name": "niras-copilot-migration-package-tools",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Microsoft package validation tools; not part of the uploaded plugin.",
+  "scripts": {
+    "check:microsoft": "node tools/check_microsoft_package.cjs"
+  },
+  "devDependencies": {
+    "@microsoft/teams-manifest": "0.1.9",
+    "@microsoft/teamsfx-core": "3.1.5"
+  }
+}

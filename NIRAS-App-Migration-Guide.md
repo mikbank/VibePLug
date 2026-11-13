@@ -1,6 +1,6 @@
 # NIRAS App Migration for Copilot Code
 
-Version 1.0.0 · NIRAS A/S · Prepared 13 November 2026
+Version 1.0.1 · NIRAS A/S · Prepared 13 November 2026
 
 The plugin is designed to explore an existing solution, ask focused questions about unclear business rules, and recreate it as a fresh Copilot Code managed app. It covers Lovable, HTML applications and projects from other platforms. It defaults to SharePoint for durable data and carries a migration request through building, testing and publishing, unless the user limits the scope.
 
@@ -8,19 +8,20 @@ The plugin contains six Agent Skills. It uses the host's available coding, sourc
 
 ## Files
 
-- **[dist/niras-app-migration-1.0.0.zip](dist/niras-app-migration-1.0.0.zip?raw=true)** — the plugin package to upload to Microsoft 365.
-- **[dist/niras-app-migration-source-1.0.0.zip](dist/niras-app-migration-source-1.0.0.zip?raw=true)** — editable skills, references, utility, tests, packaging tools, research and evaluation scenarios. Do not upload this ZIP as the plugin.
+- **[dist/niras-app-migration-1.0.1.zip](dist/niras-app-migration-1.0.1.zip?raw=true)** — the plugin package to upload to Microsoft 365.
+- **[dist/niras-app-migration-source-1.0.1.zip](dist/niras-app-migration-source-1.0.1.zip?raw=true)** — editable skills, references, utility, tests, packaging tools, research and evaluation scenarios. Do not upload this ZIP as the plugin.
 - **[RESEARCH.md](RESEARCH.md)** — findings and official sources.
 - **[validation.json](validation.json)** — local package validation result and hash.
+- **[microsoft-validation.json](microsoft-validation.json)** — Microsoft offline parser, schema and packager comparison results.
 
 ## Install
 
 1. Sign in to the Microsoft 365 admin center with permission to manage plugins.
-2. Use **Agents → Tools → Registry → Upload**, where available, and select `niras-app-migration-1.0.0.zip`. Review the six skills, scope the intended users/groups, and install. Microsoft also documents **Manage apps → Upload custom app → … → Add agent** for ZIP publication; use the surface exposed in the tenant.
+2. Use **Agents → Tools → Registry → Upload**, where available, and select `niras-app-migration-1.0.1.zip`. Review the six skills, scope the intended users/groups, and install. Microsoft also documents **Manage apps → Upload custom app → … → Add agent** for ZIP publication; use the surface exposed in the tenant.
 3. In Cowork's plugins area under **Sources & Skills** or **Customize**, locate **NIRAS App Migration**. Enable/add it if required, then confirm its skills appear in a new session. Verify plugin availability in Code as well.
 4. Run a restricted pilot before broader distribution. The source archive contains an evaluation guide and 18 scenario specifications.
 
-The package uses Microsoft's documented unified manifest 1.28 format. Publisher metadata is NIRAS A/S, the NIRAS public website and privacy policy, and the internal Citizen Development and VibeCoding page supplied for terms of use. It includes no external MCP server or credentials.
+The 1.0.1 compatibility candidate uses the current unified manifest 1.29 format. Publisher metadata is NIRAS A/S, the NIRAS public website and privacy policy, and the internal Citizen Development and VibeCoding page supplied for terms of use. It includes no external MCP server or credentials.
 
 Official references: [admin upload](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/manage-plugins-skills-mcp-servers), [plugin package format](https://learn.microsoft.com/en-us/copilot/cowork/cowork-plugin-development).
 
@@ -51,7 +52,9 @@ The optional read-only inventory helper supports directories, ZIPs and HTML with
 
 ## Verification boundary
 
-The plugin ZIP passed local validation against Microsoft's saved manifest schema and documented packaging constraints. **Fourteen tests passed for the inventory helper.** The ZIP rebuild is reproducible.
+The ZIP passed Microsoft's own offline manifest and skill-package checks, and its contents match the official packager output. **Twenty-one tests passed** (14 inventory-helper and 7 package tests). The ZIP rebuild is reproducible.
+
+The original 1.0.0 package was rejected by admin upload. The 1.0.1 candidate has not yet been retested in that tenant. See [upload troubleshooting](ADMIN-UPLOAD-TROUBLESHOOTING.md) for the exact findings and service-side validation route.
 
 Microsoft tenant ingestion, skill activation, actual model-led migrations, live SharePoint operations and managed-app deployment have **not** been tested. The 18 behavioral scenarios are specifications, not passed tests. A first pilot should prove a real save/load after refresh and in another session, backend permissions and required conflict protection, then successful publication and actual player launch.
 
